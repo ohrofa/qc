@@ -1,0 +1,7 @@
+# www.robotstxt.org/
+
+User-agent: Mediapartners-Google
+Disallow:
+User-agent: *
+Allow: /
+Sitemap: https://qurano.com/sitemap.xml

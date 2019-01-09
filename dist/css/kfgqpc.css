@@ -1,0 +1,6 @@
+@font-face {
+  font-family: 'KFGQPCUthmanicScriptHAFS';
+  font-style: normal;
+  font-weight: 400;
+  src: local('KFGQPC Uthmanic Script HAFS'), local('KFGQPC Uthman Taha Naskh'), local('KFGQPCUthmanTahaNaskh'), url(../fonts/kfgqpc/KFGQPCUthmanicScriptHAFS.woff2) format('woff2');
+}
