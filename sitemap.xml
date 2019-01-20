@@ -15,4 +15,7 @@
   <sitemap>
     <loc>https://qurano.com/sitemap-bn.xml</loc>
   </sitemap>
+  <sitemap>
+    <loc>https://qurano.com/sitemap-tr.xml</loc>
+  </sitemap>
 </sitemapindex>
