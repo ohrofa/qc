@@ -21,4 +21,7 @@
   <sitemap>
     <loc>https://qurano.com/sitemap-de.xml</loc>
   </sitemap>
+  <sitemap>
+    <loc>https://qurano.com/sitemap-quranindex.xml</loc>
+  </sitemap>
 </sitemapindex>
