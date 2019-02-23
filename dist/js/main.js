@@ -1,4 +1,21 @@
 /**
+ * tabs-to-accordion.js
+ * https://github.com/schne324/responsive-tabs-to-accordion
+ *
+ * Licensed under the MIT license.
+ */
+ var $navlist=$("#navlist"),$tabContainer=$("#tab-container"),$panels=$("#panels");function findAdjacentTab(e,i,t){var a=37===t||38===t?"prev":"next",n="prev"===a?$(e.parentNode).prev()[0]:$(e.parentNode).next()[0];if(!n){var r=i.find("li")
+;n="prev"===a?r[r.length-1]:r[0]}return $(n).find("a")[0]}function setActiveAndInactive(e,i){i.find("li").each(function(){var i=$(this).find("a").first().attr("aria-controls"),t=$(this).find("a")[0]
+;this!==e.parentNode?($(this).removeClass("active"),t.tabIndex=-1,t.setAttribute("aria-selected","false"),$("#"+i).removeClass("current").attr("aria-hidden","true")):($(this).addClass("active"),t.tabIndex=0,
+t.setAttribute("aria-selected","true"),$("#"+i).addClass("current").attr("aria-hidden","false"))})}$navlist.on("keydown","li a",function(e){var i=e.which,t=e.target;if($.inArray(i,[37,38,39,40])>-1){var a=findAdjacentTab(t,$navlist,i)
+;a&&(e.preventDefault(),a.focus(),setActiveAndInactive(a,$navlist))}else if(13===i||32===i)e.preventDefault(),t.click();else if(34===i){e.preventDefault();var n=$("#"+this.getAttribute("aria-controls"));n&&n.prop("tabIndex",-1).focus()}}),
+$(document.body).on("keydown",".panel",function(e){if(33===e.which){e.preventDefault();var i=$navlist.find("li.active a")[0];i&&i.focus()}}),$navlist.on("click","li a",function(e){e.preventDefault(),setActiveAndInactive(this,$navlist)})
+;var isAccordionView=!1,isTabsView=!1;function determineView(){var e=$(window).width();if(e<=800&&!isAccordionView)$tabContainer.removeClass("tabs-view").addClass("accordion-view"),$panels.find(".panel").each(function(){
+var e=this.id,i=e&&$('#navlist a[aria-controls="'+e+'"]')[0];i&&$(i.parentNode).append(this)}),isAccordionView=!0,isTabsView=!1;else if(e>800&&!isTabsView){var i=$tabContainer.hasClass("accordion-view")
+;$tabContainer.removeClass("accordion-view").addClass("tabs-view"),i&&$navlist.find(".panel").each(function(){$panels.append(this)}),isTabsView=!0,isAccordionView=!1}}determineView(),function(e,i){jQuery.fn[i]=function(e){
+return e?this.bind("resize",(t=e,function(){var e=this,i=arguments;r?clearTimeout(r):n&&t.apply(e,i),r=setTimeout(function(){n||t.apply(e,i),r=null},a||100)})):this.trigger(i);var t,a,n,r}}(jQuery,"smartresize"),
+$(window).smartresize(determineView);
+/**
  * author : İlker YILMAZ
  * url : https://github.com/kuantal/Multiple-circular-player
  * inspired by https://github.com/frumbert/circular-player
