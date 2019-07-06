@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <sitemap>
+    <loc>https://qurano.com/sitemap-languages.xml</loc>
+  </sitemap>
+  <sitemap>
     <loc>https://qurano.com/sitemap-ar.xml</loc>
   </sitemap>
   <sitemap>
@@ -23,5 +26,8 @@
   </sitemap>
   <sitemap>
     <loc>https://qurano.com/sitemap-quranindex.xml</loc>
+  </sitemap>
+  <sitemap>
+    <loc>https://qurano.com/sitemap-ru.xml</loc>
   </sitemap>
 </sitemapindex>
