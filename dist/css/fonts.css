@@ -1,1 +1,1 @@
-@font-face{font-family:'mehr_n_w';src:url('../fonts/mehr/mehr_n_w.woff2') format('woff2');font-style:normal;font-weight:400;}
+@font-face{font-family:'mehr_n_w';src:local('Mehr Nastaliq Web'),url('../fonts/mehr/mehr_n_w.woff2') format('woff2');font-style:normal;font-weight:400;font-display:swap;}
