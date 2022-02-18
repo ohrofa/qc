@@ -58,3 +58,76 @@ $(document).ready(function(){$('.mediPlayer').mediaPlayer()});var curYear=new Da
 /* Qurano Select Aya v2.1 */
 $(document).ready(function(){var html_lang = document.documentElement.lang,lang_id = ["ar","bn","de","en","hi","id","ru","tr","ur"],inputLang = "",inputSura = "",slug_value = "",aya_name = "",hreflang = "",SelectName = ["inputLang", "inputSura","inputAya"];for(var n = 0, el_label=""; n < SelectName.length; n++) {el_label += '<label class="select"><select name="' + SelectName[n] + '" id="' + SelectName[n] + '" class="form-control"></select></label>';};$(el_label).appendTo( $("<div/>", {"class": "row"}).appendTo( "#selectSura" ));for(var i = 0; i < lang_id.length; i++) {var isLang = lang_id[i] == html_lang ?  true : false;inputLang += '<option data-lang-id="'+ lang_id[i] + '" ' + (isLang ? "selected " : "") + 'value="'+(i+1)+'">'+lang_id[i].toUpperCase()+'</option>';};$('#inputLang').html(inputLang) ;function load_json(d_lang,isSelected) {hreflang = d_lang;$.ajax({dataType: "json",url: "/dist/data/sura_slug.json",success: function(data) {var html_markup = '';$.each(data, function(key, value) {switch(hreflang) {case "id":slug_value = value.id_slug;break;default:slug_value = value.en_slug;}var key_id = key+1,sura_slugify = hreflang=="id" ? value.id_slug : value.en_slug,value_aya_count = value.aya_count;html_markup += '<option data-lang="' + hreflang + '" data-sura-slug="' + sura_slugify + '" data-sura-count="'+ value_aya_count + '" ' + (slug_value == sura_dir && isSelected ? 'selected="selected"' : '') + 'value="'+key_id+'">'+key_id + ' - ' + value.name +'</option>';});$('#inputSura').append(html_markup) ;}});}function load_sura(slug,count,value,sura_lang,isSinglePage) {switch(sura_lang) {case "id":aya_name = "ayat";break;case "ar":aya_name = "aya";break;case "en":case "hi":case "ru":aya_name = "verse";break;default:aya_name = "ayah";};var sura_count = parseInt(count),sura_markup = "";if(number_aya==0){sura_markup += '<option value="0" selected>Select</option>';}for(var sura_item = 0; sura_item < sura_count; sura_item++) {sura_value = sura_item+1;sura_markup += '<option ' + (sura_value == number_aya && isSinglePage ? 'selected="selected"' : '') + ' data-uri="/' + sura_lang + '/'+value +'-' +slug +'/' + aya_name +'-' + sura_value + '/" value="'+ sura_value +'">'+ sura_value +'</option>';}$('#inputAya').append(sura_markup);}$('#inputLang').on('change', function () {var f_lang = $(this).find(':selected'),slug_lang = $(f_lang).attr("data-lang-id");$('#inputSura').html('<option value="0" selected>Select</option>');$('#inputAya').html('<option value="0" selected>Select</option>');load_json(slug_lang,false);});$('#inputSura').on('change', function () {var s_sura = $(this).find(':selected'),slug = $(s_sura).attr("data-sura-slug"),count = $(s_sura).attr("data-sura-count"),value = $(s_sura).attr("value"),sura_lang = $(s_sura).attr("data-lang");if(page_type == "surah_home"){$('#inputAya').html('');}else {$('#inputAya').html('<option value="0" selected>Select</option>');};load_sura(slug,count,value,sura_lang,false);return false;});$('#inputAya').on('change', function () {var url = $('option:selected',this).attr("data-uri");if (url) {window.location = url;}return false;});load_json(html_lang,true);load_sura(sura_dir,count_ayat,sura_id,html_lang,true);/* search */var searchEl = '<div class="row qh-cse" id="qhCse"><div class="search container"><input type="text" class="searchTerm" placeholder="Search..."><button type="submit" class="searchButton"><i class="fa fa-search"></i></button></div></div>';$(".header").after(searchEl);function searchCse(){query = encodeURIComponent($.trim($('.searchTerm').val()));if(!query){$('.searchTerm').addClass('warning');} else {$('.searchTerm').removeClass('warning');/*url ='/search.html?q='*/url ='https://cse.google.com/cse?cx=partner-pub-3288866780282962:trqd80zcgmk&q=' + query;window.location.href = url;}}$( ".searchButton" ).click(function() {searchCse();});$("input.searchTerm").keydown(function(e){if(e.which === 13){$(".searchButton").click();}}); });
 /*v9.1*/$( document ).ready(function() {var accordion = $('body').find('.translation-wrapper');var btnExpand = $('.t-widget .btn');var expandedClass = 'is-expanded';$.each(accordion, function () {var accordionItems = $(this).find('.ac-item');$.each(accordionItems, function () {var $this = $(this);var triggerBtn = $this.find('.ac-title');var innerContent = $this.find('.ac-content-inner')[0],maxHeight = $(innerContent).outerHeight(),content = $this.find('.ac-content')[0];var setHeight = function (nV) {if (!content.style.height || content.style.height === '0px') {$(content).css('height', maxHeight);} else {$(content).css('height', '0px');}};var toggleClasses = function (event) {var clickedItem = event.currentTarget;var currentItem = $(clickedItem).parent();var clickedContent = $(currentItem).find('.ac-content');$(currentItem).toggleClass(expandedClass);setHeight(currentItem);if ($(currentItem).hasClass('is-expanded')) {$(clickedItem).attr('aria-selected', 'true');$(clickedItem).attr('aria-expanded', 'true');$(clickedContent).attr('aria-hidden', 'false');} else {$(clickedItem).attr('aria-selected', 'false');$(clickedItem).attr('aria-expanded', 'false');$(clickedContent).attr('aria-hidden', 'true');}};triggerBtn.on('click', event, function (e) {e.preventDefault();toggleClasses(event);});$(triggerBtn).on('keydown', event, function (e) {if (e.keyCode === 13 || e.keyCode === 32) {e.preventDefault();toggleClasses(event);}});var btnLink = $this.find('.ac-link');btnLink.on('click', function () {var btnTitle = btnLink.parents('.ac-item');if (!$(btnTitle).hasClass(expandedClass)) {$this.addClass(expandedClass);setHeight($this);}});btnExpand.on('click', function () {if ($($this).hasClass(expandedClass)) {$this.removeClass(expandedClass);setHeight($this);} else {$this.addClass(expandedClass);setHeight($this);}});if (window.location.href.indexOf("#") > -1) {setHeight($this);$this.addClass(expandedClass);};});});$(btnExpand).click(function() {if($(this).hasClass('active')) {$(this).removeClass('active');$(this).find('span').text('Collapse');} else {$(this).addClass('active');$(this).find('span').text('Expand');}});var firstAcContent = $('.translation-wrapper .ac-item:first-child .ac-content'),firstAcContentInner = $(firstAcContent).find('.ac-content-inner').outerHeight();$(firstAcContent).css('height', firstAcContentInner);});
+/* update dark theme+ */
+$(document).ready(function() {
+    $('<div class="text-center"><div class="text-muted">QuranO Youtube Channel</div><div class="text-muted"><small>Word By Word Al-Quran Video:</small></div><a target="_blank" rel="noopener" href="https://www.youtube.com/channel/UCXOfzdqzVQkFGpEUOfwTG5A/videos"><img width="64" height="64" class="button" src="/dist/img/youtube.svg"></a></div>').insertBefore("#footer-ins");
+    
+    function addRadioBtn() {
+        var el = '<div title="change theme" style="visibility:hidden" class="theme-switch-wrapper">';
+            el += '<label class="theme-switch" for="theme_toggle">';
+            el += '<input type="checkbox" id="theme_toggle" />';
+            el += '<div class="slider"></div>';
+            el += '</label>';
+            el += '</div>';
+        $(el).insertAfter($("#searchbox .searchbox"));       
+    }
+
+    var jsAdded = '', cssAdded = '';
+    function loadJS(fileName){
+        if(jsAdded.indexOf(fileName) !== -1) {
+           return;
+        }
+        var head = document.getElementsByTagName('head')[0],
+            script = document.createElement('script');
+        script.src = fileName;
+        script.type = 'text/javascript';
+        head.append(script);
+        jsAdded += fileName;
+    }
+    function loadCSS(fileName) {
+        if(cssAdded.indexOf(fileName) !== -1) {
+            return;
+        }
+        var head = document.getElementsByTagName('head')[0],
+            style = document.createElement('link') ;
+        style.href = fileName;
+        style.type = 'text/css';
+        style.rel = 'stylesheet';
+        head.append(style);
+        cssAdded += fileName;
+    }
+
+    addRadioBtn();
+    loadCSS('/dist/css/theme-dark.css');
+    $('.theme-switch-wrapper').css('visibility', 'visible');
+    
+    if (!localStorage.getItem("qurano_mode")) {
+        if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+            localStorage.setItem("qurano_mode", "dark-theme");            
+        } else {
+            localStorage.setItem("qurano_mode", "light-theme");
+        }
+    }
+
+    if (localStorage.getItem("qurano_mode") == "dark-theme") {
+        $("body").addClass("dark-theme");
+        $("body").removeClass("light-theme");
+        document.getElementById("theme_toggle").checked = true;
+    } else {
+        $("body").removeClass("dark-theme");
+        $("body").addClass("light-theme");
+        document.getElementById("theme_toggle").checked = false;
+    }
+
+    $("#theme_toggle").on("click", function() {
+        if ($("body").hasClass("dark-theme")) {
+            $("body").removeClass("dark-theme");
+            $("body").addClass("light-theme");
+            localStorage.setItem("qurano_mode", "light-theme");
+        } else {
+            $("body").addClass("dark-theme");
+            $("body").removeClass("light-theme");
+            localStorage.setItem("qurano_mode", "dark-theme");
+        }
+    });
+});

@@ -16,3 +16,74 @@ e.classList.contains("is-active")?t.value="":n.classList.add("is-hidden"),setTim
 $(document).ready(function(){var curYear=new Date().getFullYear();$("#copyright-year").text(curYear);$("#footer-ins").html('<a href="/donate/" class="button button-primary" lang="en">Donate</a><p class="help"><small lang="en">Please support us by making a donation</small></p> <p> '+ curYear + ' <a href="https://qurano.com/">QuranO.com</a> - Quran O</p>');var num_ar=['0','1','2','3','4','5','6','7','8','9'];var num_ar_r=['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];$('.num-ar').text(function(i,val){return val.replace(/\d/g,function(m){return num_ar_r[num_ar.indexOf(m)];})});var num_ur=['0','1','2','3','4','5','6','7','8','9'];var num_ur_r=['۰','۱','۲','۳','۴','۵','۶','۷','۸','۹'];$('.num-ur').text(function(i,val){return val.replace(/\d/g,function(m){return num_ur_r[num_ur.indexOf(m)];})});var num_bn=['0','1','2','3','4','5','6','7','8','9'];var num_bn_r=['০','১','২','৩','৪','৫','৬','৭','৮','৯'];$('.num-bn').text(function(i,val){return val.replace(/\d/g,function(m){return num_bn_r[num_bn.indexOf(m)];})});$('.closeButton').on('click', function(e) {$('#quran-info').slideUp();});function showDropdownMenu(e) {var menuContent = ".dropdown-content";$(menuContent).removeClass("show");$(e).next(menuContent).toggleClass("show");};$(".dropbtn").click(function() {showDropdownMenu(this);});window.onclick = function(event) {if (!event.target.matches(".dropbtn")) {var dropdowns = $(".dropdown-content");var i;for (i = 0; i < dropdowns.length; i++) {var openDropdown = dropdowns[i];if (openDropdown.classList.contains("show")) {openDropdown.classList.remove("show");}}}}});
 // Qurano Select Aya v2.1
 $(document).ready(function(){var html_lang = document.documentElement.lang,lang_id = ["ar","bn","de","en","id","hi","ru","tr","ur"],inputLang = "",inputSura = "",slug_value = "",aya_name = "",hreflang = "",SelectName = ["inputLang", "inputSura","inputAya"];for(var n = 0, el_label=""; n < SelectName.length; n++) {el_label += '<label class="select"><select name="' + SelectName[n] + '" id="' + SelectName[n] + '" class="form-control"></select></label>';};$(el_label).appendTo( $("<div/>", {"class": "row"}).appendTo( "#selectSura" ));for(var i = 0; i < lang_id.length; i++) {var isLang = lang_id[i] == html_lang ?  true : false;inputLang += '<option data-lang-id="'+ lang_id[i] + '" ' + (isLang ? "selected " : "") + 'value="'+(i+1)+'">'+lang_id[i].toUpperCase()+'</option>';};$('#inputLang').html(inputLang) ;function load_json(d_lang,isSelected) {hreflang = d_lang;$.ajax({dataType: "json",url: "/dist/data/sura_slug.json",success: function(data) {var html_markup = '';$.each(data, function(key, value) {switch(hreflang) {case "id":slug_value = value.id_slug;break;default:slug_value = value.en_slug;}var key_id = key+1,sura_slugify = hreflang=="id" ? value.id_slug : value.en_slug,value_aya_count = value.aya_count;html_markup += '<option data-lang="' + hreflang + '" data-sura-slug="' + sura_slugify + '" data-sura-count="'+ value_aya_count + '" ' + (slug_value == sura_dir && isSelected ? 'selected="selected"' : '') + 'value="'+key_id+'">'+key_id + ' - ' + value.name +'</option>';});$('#inputSura').append(html_markup) ;}});}function load_sura(slug,count,value,sura_lang,isSinglePage) {switch(sura_lang) {case "id":aya_name = "ayat";break;case "ar":aya_name = "aya";break;case "en":case "hi":case "ru":aya_name = "verse";break;default:aya_name = "ayah";};var sura_count = parseInt(count),sura_markup = "";if(number_aya==0){sura_markup += '<option value="0" selected>Select</option>';}for(var sura_item = 0; sura_item < sura_count; sura_item++) {sura_value = sura_item+1;sura_markup += '<option ' + (sura_value == number_aya && isSinglePage ? 'selected="selected"' : '') + ' data-uri="/' + sura_lang + '/'+value +'-' +slug +'/' + aya_name +'-' + sura_value + '/" value="'+ sura_value +'">'+ sura_value +'</option>';}$('#inputAya').append(sura_markup);}$('#inputLang').on('change', function () {var f_lang = $(this).find(':selected'),slug_lang = $(f_lang).attr("data-lang-id");$('#inputSura').html('<option value="0" selected>Select</option>');$('#inputAya').html('<option value="0" selected>Select</option>');load_json(slug_lang,false);});$('#inputSura').on('change', function () {var s_sura = $(this).find(':selected'),slug = $(s_sura).attr("data-sura-slug"),count = $(s_sura).attr("data-sura-count"),value = $(s_sura).attr("value"),sura_lang = $(s_sura).attr("data-lang");if(page_type == "surah_home"){$('#inputAya').html('');}else {$('#inputAya').html('<option value="0" selected>Select</option>');};load_sura(slug,count,value,sura_lang,false);return false;});$('#inputAya').on('change', function () {var url = $('option:selected',this).attr("data-uri");if (url) {window.location = url;}return false;});load_json(html_lang,true);load_sura(sura_dir,count_ayat,sura_id,html_lang,true);/* search */var searchEl = '<div class="row qh-cse" id="qhCse"><div class="search container"><input type="text" class="searchTerm" placeholder="Search..."><button type="submit" class="searchButton"><i class="fa fa-search"></i></button></div></div>';$(".header").after(searchEl);function searchCse(){query = encodeURIComponent($.trim($('.searchTerm').val()));if(!query){$('.searchTerm').addClass('warning');} else {$('.searchTerm').removeClass('warning');/*url ='/search.html?q='*/url ='https://cse.google.com/cse?cx=partner-pub-3288866780282962:trqd80zcgmk&q=' + query;window.location.href = url;}}$( ".searchButton" ).click(function() {searchCse();});$("input.searchTerm").keydown(function(e){if(e.which === 13){$(".searchButton").click();}}); });
+/* update dark theme+ */
+$(document).ready(function() {
+    function addRadioBtn() {
+        var el = '<div title="change theme" style="visibility:hidden" class="theme-switch-wrapper">';
+            el += '<label class="theme-switch" for="theme_toggle">';
+            el += '<input type="checkbox" id="theme_toggle" />';
+            el += '<div class="slider"></div>';
+            el += '</label>';
+            el += '</div>';
+        $(el).insertAfter($("#searchbox .searchbox"));       
+    }
+
+    var jsAdded = '', cssAdded = '';
+    function loadJS(fileName){
+        if(jsAdded.indexOf(fileName) !== -1) {
+           return;
+        }
+        var head = document.getElementsByTagName('head')[0],
+            script = document.createElement('script');
+        script.src = fileName;
+        script.type = 'text/javascript';
+        head.append(script);
+        jsAdded += fileName;
+    }
+    function loadCSS(fileName) {
+        if(cssAdded.indexOf(fileName) !== -1) {
+            return;
+        }
+        var head = document.getElementsByTagName('head')[0],
+            style = document.createElement('link') ;
+        style.href = fileName;
+        style.type = 'text/css';
+        style.rel = 'stylesheet';
+        head.append(style);
+        cssAdded += fileName;
+    }
+
+    addRadioBtn();
+    loadCSS('/dist/css/theme-dark.css');
+    $('.theme-switch-wrapper').css('visibility', 'visible');
+    
+    if (!localStorage.getItem("qurano_mode")) {
+        if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+            localStorage.setItem("qurano_mode", "dark-theme");            
+        } else {
+            localStorage.setItem("qurano_mode", "light-theme");
+        }
+    }
+
+    if (localStorage.getItem("qurano_mode") == "dark-theme") {
+        $("body").addClass("dark-theme");
+        $("body").removeClass("light-theme");
+        document.getElementById("theme_toggle").checked = true;
+    } else {
+        $("body").removeClass("dark-theme");
+        $("body").addClass("light-theme");
+        document.getElementById("theme_toggle").checked = false;
+    }
+
+    $("#theme_toggle").on("click", function() {
+        if ($("body").hasClass("dark-theme")) {
+            $("body").removeClass("dark-theme");
+            $("body").addClass("light-theme");
+            localStorage.setItem("qurano_mode", "light-theme");
+        } else {
+            $("body").addClass("dark-theme");
+            $("body").removeClass("light-theme");
+            localStorage.setItem("qurano_mode", "dark-theme");
+        }
+    });
+});
