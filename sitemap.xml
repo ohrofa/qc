@@ -33,4 +33,7 @@
   <sitemap>
     <loc>https://qurano.com/sitemap-hi.xml</loc>
   </sitemap>
+  <sitemap>
+    <loc>https://qurano.com/sitemap-ta.xml</loc>
+  </sitemap>
 </sitemapindex>
