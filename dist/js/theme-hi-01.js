@@ -60,46 +60,7 @@ $(document).ready(function(){var html_lang = document.documentElement.lang,lang_
 /*v9.1*/$( document ).ready(function() {var accordion = $('body').find('.translation-wrapper');var btnExpand = $('.t-widget .btn');var expandedClass = 'is-expanded';$.each(accordion, function () {var accordionItems = $(this).find('.ac-item');$.each(accordionItems, function () {var $this = $(this);var triggerBtn = $this.find('.ac-title');var innerContent = $this.find('.ac-content-inner')[0],maxHeight = $(innerContent).outerHeight(),content = $this.find('.ac-content')[0];var setHeight = function (nV) {if (!content.style.height || content.style.height === '0px') {$(content).css('height', maxHeight);} else {$(content).css('height', '0px');}};var toggleClasses = function (event) {var clickedItem = event.currentTarget;var currentItem = $(clickedItem).parent();var clickedContent = $(currentItem).find('.ac-content');$(currentItem).toggleClass(expandedClass);setHeight(currentItem);if ($(currentItem).hasClass('is-expanded')) {$(clickedItem).attr('aria-selected', 'true');$(clickedItem).attr('aria-expanded', 'true');$(clickedContent).attr('aria-hidden', 'false');} else {$(clickedItem).attr('aria-selected', 'false');$(clickedItem).attr('aria-expanded', 'false');$(clickedContent).attr('aria-hidden', 'true');}};triggerBtn.on('click', event, function (e) {e.preventDefault();toggleClasses(event);});$(triggerBtn).on('keydown', event, function (e) {if (e.keyCode === 13 || e.keyCode === 32) {e.preventDefault();toggleClasses(event);}});var btnLink = $this.find('.ac-link');btnLink.on('click', function () {var btnTitle = btnLink.parents('.ac-item');if (!$(btnTitle).hasClass(expandedClass)) {$this.addClass(expandedClass);setHeight($this);}});btnExpand.on('click', function () {if ($($this).hasClass(expandedClass)) {$this.removeClass(expandedClass);setHeight($this);} else {$this.addClass(expandedClass);setHeight($this);}});if (window.location.href.indexOf("#") > -1) {setHeight($this);$this.addClass(expandedClass);};});});$(btnExpand).click(function() {if($(this).hasClass('active')) {$(this).removeClass('active');$(this).find('span').text('Collapse');} else {$(this).addClass('active');$(this).find('span').text('Expand');}});var firstAcContent = $('.translation-wrapper .ac-item:first-child .ac-content'),firstAcContentInner = $(firstAcContent).find('.ac-content-inner').outerHeight();$(firstAcContent).css('height', firstAcContentInner);});
 /* update dark theme+ */
 $(document).ready(function() {
-    $('<div class="text-center"><div class="text-muted">QuranO Youtube Channel</div><div class="text-muted"><small>Word By Word Al-Quran Video:</small></div><a target="_blank" rel="noopener" href="https://www.youtube.com/channel/UCXOfzdqzVQkFGpEUOfwTG5A/videos"><img width="64" height="64" class="button" src="/dist/img/youtube.svg"></a></div>').insertBefore("#footer-ins");
-    
-    function addRadioBtn() {
-        var el = '<div title="change theme" style="visibility:hidden" class="theme-switch-wrapper">';
-            el += '<label class="theme-switch" for="theme_toggle">';
-            el += '<input type="checkbox" id="theme_toggle" />';
-            el += '<div class="slider"></div>';
-            el += '</label>';
-            el += '</div>';
-        $(el).insertAfter($("#searchbox .searchbox"));       
-    }
-
-    var jsAdded = '', cssAdded = '';
-    function loadJS(fileName){
-        if(jsAdded.indexOf(fileName) !== -1) {
-           return;
-        }
-        var head = document.getElementsByTagName('head')[0],
-            script = document.createElement('script');
-        script.src = fileName;
-        script.type = 'text/javascript';
-        head.append(script);
-        jsAdded += fileName;
-    }
-    function loadCSS(fileName) {
-        if(cssAdded.indexOf(fileName) !== -1) {
-            return;
-        }
-        var head = document.getElementsByTagName('head')[0],
-            style = document.createElement('link') ;
-        style.href = fileName;
-        style.type = 'text/css';
-        style.rel = 'stylesheet';
-        head.append(style);
-        cssAdded += fileName;
-    }
-
-    addRadioBtn();
-    loadCSS('/dist/css/theme-dark.css');
-    $('.theme-switch-wrapper').css('visibility', 'visible');
+    $('<div class="text-center"><div class="text-muted">QuranO Youtube Channel</div><div class="text-muted"><small>Word By Word Al-Quran Video:</small></div><a target="_blank" rel="noopener" href="https://www.youtube.com/channel/UCXOfzdqzVQkFGpEUOfwTG5A"><img width="64" height="64" class="button" src="/dist/img/youtube.svg"></a></div>').insertBefore("#footer-ins");
     
     if (!localStorage.getItem("qurano_mode")) {
         if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
@@ -131,5 +92,3 @@ $(document).ready(function() {
         }
     });
 });
-/* featured */
-document.addEventListener("DOMContentLoaded",(()=>{var e=document.getElementById("featured_1"),t=document.getElementById("featured_2");Element.prototype.setAttributes=function(e){for(var t in e)if("styles"!=t&&"style"!=t||"object"!=typeof e[t])"html"==t?this.innerHTML=e[t]:this.setAttribute(t,e[t]);else for(var a in e[t])this.style[a]=e[t][a]};!async function(){var a;if(await(a=document.createElement("script"),a.type="text/javascript",a.src="http"+("https:"===location.protocol?"s":"")+"://pl20778328.highcpmrevenuegate.com/8e/33/c5/8e33c5774e8c99767db015d422c77405.js",void document.head.appendChild(a)),await(()=>{if(void 0!==e&&null!=e){var t=document.createElement("script");t.type="text/javascript",t.setAttributes({async:"async","data-cfasync":"false",src:"http"+("https:"===location.protocol?"s":"")+"://pl20784595.highcpmrevenuegate.com/a61b79184bf7ef31a5a36ed58d218157/invoke.js"}),document.head.appendChild(t)}})(),await(()=>{if(void 0!==t&&null!=t){var a=document.createElement("script");a.id="srcAfterFeatured",a.type="text/javascript",a.text="atOptions = {'key' : '5f9c59d0b0f19d6e3b491264d378b1e3','format' : 'iframe','height' : 250,'width' : 300,'params' : {}}",featured_2.parentNode.insertBefore(a,featured_2.nextSibling)}void 0!==e&&null!=e&&e.setAttribute("id","container-a61b79184bf7ef31a5a36ed58d218157")})(),void 0!==t&&null!=t){var r=document.getElementById("srcAfterFeatured");let e=document.createElement("script");e.type="text/javascript",e.src="http"+("https:"===location.protocol?"s":"")+"://www.profitablecreativeformat.com/5f9c59d0b0f19d6e3b491264d378b1e3/invoke.js",r.parentNode.insertBefore(e,r.nextSibling)}}()}));
